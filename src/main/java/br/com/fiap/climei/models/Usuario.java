@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,18 +33,22 @@ public class Usuario implements UserDetails {
     private Long id;
 
     @NotBlank(message = "O nome é obrigatório")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String nome;
 
     @NotBlank(message = "O email é obrigatório")
+    @Size(min = 3, max = 100, message = "O email deve ter entre 3 e 100 caracteres")
     private String email;
 
     @NotBlank(message = "A senha é obrigatória")
+    @Size(min = 3, max = 100, message = "A senha deve ter entre 3 e 100 caracteres")
     private String senha;
 
     @Min(value = 1, message = "A idade deve ser maior ou igual a 1")
     private Integer idade;
 
     @NotBlank(message = "O sexo é obrigatório")
+    @Size(min = 1, max = 1, message = "O sexo deve ter 1 caractere")
     private String sexo;
 
     @Override
