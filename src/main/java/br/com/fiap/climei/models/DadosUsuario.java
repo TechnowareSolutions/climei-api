@@ -5,6 +5,7 @@ import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import br.com.fiap.climei.controllers.DadosUsuarioController;
+import br.com.fiap.climei.controllers.UsuarioController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,7 +42,8 @@ public class DadosUsuario {
             this,
             linkTo(methodOn(DadosUsuarioController.class).show(id)).withSelfRel(),
             linkTo(methodOn(DadosUsuarioController.class).destroy(id)).withRel("delete"),
-            linkTo(methodOn(DadosUsuarioController.class).index(null, Pageable.unpaged())).withRel("all")
+            linkTo(methodOn(DadosUsuarioController.class).index(null, Pageable.unpaged())).withRel("all"),
+            linkTo(methodOn(UsuarioController.class).show(this.getUsuario().getId())).withRel("usuario")
         );
     }
 }
