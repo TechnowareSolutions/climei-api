@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class NivelTemperatura {
     private Long id;
 
     @NotBlank(message = "É obrigatório inserir uma faixa")
+    @Size(min = 3, max = 100, message = "A faixa deve ter entre 3 e 100 caracteres")
     private String faixa;
 
     @NotNull @PastOrPresent
