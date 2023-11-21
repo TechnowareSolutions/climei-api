@@ -1,6 +1,7 @@
 package br.com.fiap.climei.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,10 @@ import br.com.fiap.climei.config.AuthorizationFilter;
 import br.com.fiap.climei.exception.RestNotFoundException;
 import br.com.fiap.climei.models.Credencial;
 import br.com.fiap.climei.models.Usuario;
+import br.com.fiap.climei.repository.DadosUsuarioRepository;
+import br.com.fiap.climei.repository.LogAguaRepository;
+import br.com.fiap.climei.repository.LogBatimentoOxigenacaoRepository;
+import br.com.fiap.climei.repository.LogTemperaturaRepository;
 import br.com.fiap.climei.repository.UsuarioRepository;
 import br.com.fiap.climei.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +41,19 @@ import lombok.extern.slf4j.Slf4j;
 public class UsuarioController {
 
     @Autowired
-    UsuarioRepository repository;
+    UsuarioRepository usuarioRepository;
+
+    @Autowired
+    DadosUsuarioRepository dadosUsuarioRepository;
+
+    @Autowired
+    LogAguaRepository logAguaRepository;
+
+    @Autowired
+    LogBatimentoOxigenacaoRepository logBatimentoOxigenacaoRepository;
+
+    @Autowired
+    LogTemperaturaRepository logTemperaturaRepository;
 
     @Autowired
     AuthenticationManager manager;
@@ -85,7 +102,29 @@ public class UsuarioController {
     })
     public ResponseEntity<Usuario> delete(HttpServletRequest request){
         var usuarioOptional = getUsuario(request);
-        repository.delete(usuarioOptional);
+
+        var dadosUsuario = dadosUsuarioRepository.findByUsuarioId(usuarioOptional.getId(), Pageable.unpaged());
+        var logAgua = logAguaRepository.findByUsuarioId(usuarioOptional.getId(), Pageable.unpaged());
+        var logBatimentoOxigenacao = logBatimentoOxigenacaoRepository.findByUsuarioId(usuarioOptional.getId(), Pageable.unpaged());
+        var logTemperatura = logTemperaturaRepository.findByUsuarioId(usuarioOptional.getId(), Pageable.unpaged());
+
+        dadosUsuario.forEach(dadoUsuario -> {
+            dadosUsuarioRepository.delete(dadoUsuario);
+        });
+
+        logAgua.forEach(logAguaItem -> {
+            logAguaRepository.delete(logAguaItem);
+        });
+
+        logBatimentoOxigenacao.forEach(logBatimentoOxigenacaoItem -> {
+            logBatimentoOxigenacaoRepository.delete(logBatimentoOxigenacaoItem);
+        });
+
+        logTemperatura.forEach(logTemperaturaItem -> {
+            logTemperaturaRepository.delete(logTemperaturaItem);
+        });
+
+        usuarioRepository.delete(usuarioOptional);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -102,7 +141,7 @@ public class UsuarioController {
         Usuario usuarioToken = getUsuario(request);
         log.info("Usuario atualizado com sucesso! " + usuario);
         usuario.setId(usuarioToken.getId());
-        repository.save(usuario);
+        usuarioRepository.save(usuario);
         return ResponseEntity.ok(usuario);
     }
 
@@ -115,7 +154,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> registrar(@RequestBody @Valid Usuario usuario){
         log.info("Registrando usuário {}", usuario);
         usuario.setSenha(encoder.encode(usuario.getSenha()));
-        repository.save(usuario);
+        usuarioRepository.save(usuario);
 
         return ResponseEntity.ok(usuario);
     }
@@ -140,7 +179,7 @@ public class UsuarioController {
     }
 
     private Usuario getUsuarioById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RestNotFoundException("Usuario não encontrado!"));
+        return usuarioRepository.findById(id).orElseThrow(() -> new RestNotFoundException("Usuario não encontrado!"));
     }
     
 }

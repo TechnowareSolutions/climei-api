@@ -61,10 +61,10 @@ public class LogTemperaturaController {
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação"),
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação")
     })
-    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Integer log, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
-        var logTemperatura = (log == null) ? 
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
+        var logTemperatura = (usuario == null) ? 
             logTemperaturaRepository.findAll(pageable): 
-            logTemperaturaRepository.findByUsuarioId(log, pageable);
+            logTemperaturaRepository.findByUsuarioId(usuario, pageable);
 
         return assembler.toModel(logTemperatura.map(LogTemperatura::toEntityModel)); //HAL
     }

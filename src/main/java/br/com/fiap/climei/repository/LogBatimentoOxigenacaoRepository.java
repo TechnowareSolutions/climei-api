@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fiap.climei.models.LogBatimentoOxigenacao;
 
 public interface LogBatimentoOxigenacaoRepository extends JpaRepository<LogBatimentoOxigenacao, Long> {
-    Page<LogBatimentoOxigenacao> findByUsuarioId(Integer usuario, Pageable pageable);
+    Page<LogBatimentoOxigenacao> findByUsuarioId(Long usuario, Pageable pageable);
 }

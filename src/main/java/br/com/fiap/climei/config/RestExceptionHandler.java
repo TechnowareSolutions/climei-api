@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+
 import br.com.fiap.climei.models.RestValidationError;
 import jakarta.validation.ConstraintViolationException;
 
@@ -54,5 +56,18 @@ public class RestExceptionHandler {
 
         return ResponseEntity.badRequest().body(errors);
     }
-    
+
+    /*
+     * JWTVerificationException
+     */
+
+    @ExceptionHandler(JWTVerificationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<List<RestValidationError>> jwtVerificationExceptionHandler(JWTVerificationException e){
+        List<RestValidationError> errors = new ArrayList<>();
+
+        errors.add(new RestValidationError("JWT", e.getMessage()));
+
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

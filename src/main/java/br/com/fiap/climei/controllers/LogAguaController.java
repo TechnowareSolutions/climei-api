@@ -57,10 +57,10 @@ public class LogAguaController {
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação"),
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação")
     })
-    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Integer log, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
-        var logAgua = (log == null) ? 
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
+        var logAgua = (usuario == null) ? 
             logAguaRepository.findAll(pageable): 
-            logAguaRepository.findByUsuarioId(log, pageable);
+            logAguaRepository.findByUsuarioId(usuario, pageable);
 
         return assembler.toModel(logAgua.map(LogAgua::toEntityModel)); //HAL
     }

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fiap.climei.models.LogAgua;
 
 public interface LogAguaRepository extends JpaRepository<LogAgua, Long> {
-    Page<LogAgua> findByUsuarioId(Integer usuario, Pageable pageable);
+    Page<LogAgua> findByUsuarioId(Long usuario, Pageable pageable);
 }

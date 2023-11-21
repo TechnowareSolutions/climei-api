@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fiap.climei.models.LogTemperatura;
 
 public interface LogTemperaturaRepository extends JpaRepository<LogTemperatura, Long> {
-    Page<LogTemperatura> findByUsuarioId(Integer usuario, Pageable pageable);
+    Page<LogTemperatura> findByUsuarioId(Long usuario, Pageable pageable);
 }

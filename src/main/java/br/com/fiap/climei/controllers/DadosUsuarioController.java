@@ -57,7 +57,7 @@ public class DadosUsuarioController {
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação"),
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação")
     })
-    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Integer usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
         var dadosUsuario = (usuario == null) ? 
             dadosUsuarioRepository.findAll(pageable): 
             dadosUsuarioRepository.findByUsuarioId(usuario, pageable);

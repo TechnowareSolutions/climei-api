@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fiap.climei.models.DadosUsuario;
 
 public interface DadosUsuarioRepository extends JpaRepository<DadosUsuario, Long> {
-    Page<DadosUsuario> findByUsuarioId(Integer usuario, Pageable pageable);
+    Page<DadosUsuario> findByUsuarioId(Long usuario, Pageable pageable);
 }

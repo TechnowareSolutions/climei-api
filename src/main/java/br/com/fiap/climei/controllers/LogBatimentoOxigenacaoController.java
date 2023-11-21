@@ -57,10 +57,10 @@ public class LogBatimentoOxigenacaoController {
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação"),
         @ApiResponse(responseCode = "403", description = "É necessário estar autenticado para realizar esta operação")
     })
-    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Integer log, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
-        var logBatimentoOxigenacao = (log == null) ? 
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
+        var logBatimentoOxigenacao = (usuario == null) ? 
             logBatimentoOxigenacaoRepository.findAll(pageable): 
-            logBatimentoOxigenacaoRepository.findByUsuarioId(log, pageable);
+            logBatimentoOxigenacaoRepository.findByUsuarioId(usuario, pageable);
 
         return assembler.toModel(logBatimentoOxigenacao.map(LogBatimentoOxigenacao::toEntityModel)); //HAL
     }

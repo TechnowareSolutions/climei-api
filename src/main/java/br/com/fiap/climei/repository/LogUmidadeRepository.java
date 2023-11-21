@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.fiap.climei.models.LogUmidade;
 
 public interface LogUmidadeRepository extends JpaRepository<LogUmidade, Long> {
-    Page<LogUmidade> findByUsuarioId(Integer usuario, Pageable pageable);
+    Page<LogUmidade> findByUsuarioId(Long usuario, Pageable pageable);
 }
