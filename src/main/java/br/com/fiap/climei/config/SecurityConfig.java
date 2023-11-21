@@ -31,13 +31,17 @@ public class SecurityConfig {
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/usuario/signup", "/api/v1/usuario/login").permitAll()
             .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-            .anyRequest().authenticated()
             .and()
             .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        if( env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("open"))
+        if( env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("open")){
             http.authorizeHttpRequests().anyRequest().permitAll();
+
+        }
+        else{
+            http.authorizeHttpRequests().anyRequest().authenticated();
+        }
 
         return http.build();
     }
