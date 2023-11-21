@@ -39,7 +39,6 @@ public class SecurityConfig {
 
         if( env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("open")){
             http.authorizeHttpRequests().anyRequest().permitAll();
-
         }
         else{
             http.authorizeHttpRequests().anyRequest().authenticated();
