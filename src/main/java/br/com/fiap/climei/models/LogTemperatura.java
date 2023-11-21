@@ -2,7 +2,6 @@ package br.com.fiap.climei.models;
 
 import java.time.LocalDate;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
