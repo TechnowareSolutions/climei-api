@@ -1,7 +1,15 @@
 package br.com.fiap.climei.models;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.climei.controllers.LogAguaController;
+import br.com.fiap.climei.controllers.UsuarioController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,4 +44,14 @@ public class LogAgua {
 
     @NotNull @PastOrPresent
     private LocalDate dataAvaliacao;
+
+    public EntityModel<LogAgua> toEntityModel() {
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(LogAguaController.class).show(id)).withSelfRel(),
+            linkTo(methodOn(LogAguaController.class).destroy(id)).withRel("delete"),
+            linkTo(methodOn(LogAguaController.class).index(null, Pageable.unpaged())).withRel("all"),
+            linkTo(methodOn(UsuarioController.class).show(this.getUsuario().getId())).withRel("usuario")
+        );
+    }
 }

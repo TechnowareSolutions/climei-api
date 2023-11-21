@@ -1,7 +1,16 @@
 package br.com.fiap.climei.models;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.climei.controllers.LogTemperaturaController;
+import br.com.fiap.climei.controllers.NivelTemperaturaController;
+import br.com.fiap.climei.controllers.UsuarioController;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,4 +46,15 @@ public class LogTemperatura {
 
     @NotNull @PastOrPresent
     private LocalDate dataAvaliacao;
+
+    public EntityModel<LogTemperatura> toEntityModel() {
+        return EntityModel.of(
+            this,
+            linkTo(methodOn(LogTemperaturaController.class).show(id)).withSelfRel(),
+            linkTo(methodOn(LogTemperaturaController.class).destroy(id)).withRel("delete"),
+            linkTo(methodOn(LogTemperaturaController.class).index(null, Pageable.unpaged())).withRel("all"),
+            linkTo(methodOn(NivelTemperaturaController.class).show(this.getNivelTemperatura().getId())).withRel("niveltemperatura"),
+            linkTo(methodOn(UsuarioController.class).show(this.getUsuario().getId())).withRel("usuario")
+        );
+    }
 }
