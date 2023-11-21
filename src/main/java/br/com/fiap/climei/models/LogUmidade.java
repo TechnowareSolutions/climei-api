@@ -8,9 +8,7 @@ import java.time.LocalDate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 
-import br.com.fiap.climei.controllers.LogTemperaturaController;
 import br.com.fiap.climei.controllers.LogUmidadeController;
-import br.com.fiap.climei.controllers.NivelTemperaturaController;
 import br.com.fiap.climei.controllers.NivelUmidadeController;
 import br.com.fiap.climei.controllers.UsuarioController;
 import jakarta.persistence.Entity;
