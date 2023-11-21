@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class DadosUsuario {
     private Long id;
 
     @NotNull(message = "É obrigatório inserir um usuário") @ManyToOne
+    @JoinColumn(unique = true)
     private Usuario usuario;
 
     @NotNull(message = "É obrigatório inserir uma altura")

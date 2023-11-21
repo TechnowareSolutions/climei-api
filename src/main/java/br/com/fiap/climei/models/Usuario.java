@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,6 +38,7 @@ public class Usuario implements UserDetails {
     private String nome;
 
     @NotBlank(message = "O email é obrigatório")
+    @Column(unique = true)
     @Size(min = 3, max = 100, message = "O email deve ter entre 3 e 100 caracteres")
     private String email;
 

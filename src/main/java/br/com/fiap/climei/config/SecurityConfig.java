@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class SecurityConfig {
 
@@ -25,21 +28,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
         http
+            .csrf(csrf -> csrf.disable())
+            .formLogin(login -> login.disable())
+            .headers(headers -> headers.frameOptions().sameOrigin())
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/usuario/signup", "/api/v1/usuario/login").permitAll()
             .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            .anyRequest().authenticated()
             .and()
-            .csrf(csrf -> csrf.disable())
-            .formLogin(login -> login.disable())
-            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .headers(headers -> headers.frameOptions().sameOrigin())
-            .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
+            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        if( env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("open")){
+        if( env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("open"))
             http.authorizeHttpRequests().anyRequest().permitAll();
-        }else{
-            http.authorizeHttpRequests().anyRequest().authenticated();
-        }
 
         return http.build();
     }
