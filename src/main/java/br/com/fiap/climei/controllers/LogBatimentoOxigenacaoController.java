@@ -60,7 +60,7 @@ public class LogBatimentoOxigenacaoController {
     public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
         var logBatimentoOxigenacao = (usuario == null) ? 
             logBatimentoOxigenacaoRepository.findAll(pageable): 
-            logBatimentoOxigenacaoRepository.findByUsuarioId(usuario, pageable);
+            logBatimentoOxigenacaoRepository.findFirstByUsuarioIdOrderByDataAvaliacao(usuario, pageable);
 
         return assembler.toModel(logBatimentoOxigenacao.map(LogBatimentoOxigenacao::toEntityModel)); //HAL
     }
