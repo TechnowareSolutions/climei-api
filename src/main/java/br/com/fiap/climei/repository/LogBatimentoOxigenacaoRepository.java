@@ -10,6 +10,6 @@ public interface LogBatimentoOxigenacaoRepository extends JpaRepository<LogBatim
     Page<LogBatimentoOxigenacao> findByUsuarioId(Long usuario, Pageable pageable);
 
     // get only last log by dataAvaliacao
-    Page<LogBatimentoOxigenacao> findFirstByUsuarioIdOrderByDataAvaliacao(Long usuario, Pageable pageable);
+    Page<LogBatimentoOxigenacao> findLastByUsuarioIdOrderById(Long usuario, Pageable pageable);
     
 }
