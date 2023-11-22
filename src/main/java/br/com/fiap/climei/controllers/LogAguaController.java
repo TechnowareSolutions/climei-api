@@ -60,7 +60,7 @@ public class LogAguaController {
     public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
         var logAgua = (usuario == null) ? 
             logAguaRepository.findAll(pageable): 
-            logAguaRepository.findByUsuarioId(usuario, pageable);
+            logAguaRepository.findLastLogByUsuarioId(usuario, pageable);
 
         return assembler.toModel(logAgua.map(LogAgua::toEntityModel)); //HAL
     }

@@ -64,7 +64,7 @@ public class LogUmidadeController {
     public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Long usuario, @ParameterObject @PageableDefault(size = 5) Pageable pageable) {
         var logUmidade = (usuario == null) ? 
             logUmidadeRepository.findAll(pageable): 
-            logUmidadeRepository.findByUsuarioId(usuario, pageable);
+            logUmidadeRepository.findLastLogByUsuarioId(usuario, pageable);
 
         return assembler.toModel(logUmidade.map(LogUmidade::toEntityModel)); //HAL
     }
