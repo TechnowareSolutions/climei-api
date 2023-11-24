@@ -7,8 +7,7 @@ A tecnologia por trás do Climei é impulsionada por sensores de Internet das Co
 - [:thermometer: #Climei](#thermometer-climei)
   - [:file\_folder: Conteúdo](#file_folder-conteúdo)
   - [:computer: Tecnologias](#computer-tecnologias)
-  - [:rocket: Executando o projeto](#rocket-executando-o-projeto)
-  - [:link: Endpoints](#link-endpoints)
+  - [:rocket: Links e Acessos](#rocket-links-e-acessos)
 
 ## :computer: Tecnologias
 - [Spring Boot](https://spring.io/projects/spring-boot)
@@ -19,8 +18,21 @@ A tecnologia por trás do Climei é impulsionada por sensores de Internet das Co
 - [Azure DevOps](https://azure.microsoft.com/pt-br/services/devops/)
 - [Swagger](https://swagger.io/)
 
-## :rocket: Executando o projeto
-WIP
+## :rocket: Links e Acessos
 
-## :link: Endpoints
-WIP
+- [Aplicação API](https://climei.azurewebsites.net/)
+- [Swagger](https://climei.azurewebsites.net/swagger-ui.html)
+
+Para facilitar o acesso, segue abaixo um usuário e senha para acesso ao sistema:
+
+- Email: `testefiap@gmail.com`
+- Senha: `123123`
+
+JSON para teste de login:
+
+```json
+{
+  "email": "testefiap@gmail.com",
+  "senha": "123123"
+}
+```
